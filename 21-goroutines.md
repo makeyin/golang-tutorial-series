@@ -102,7 +102,7 @@ func main() {
 	fmt.Println("main terminated")
 }
 ```
-[在线运行程序](https://play.golang.org/p/U9ZZuSql8-)  
+[在线运行程序](https://play.golang.org/p/oltn5nw0w3-)  
 
 在上面程序中的第 21 行和第 22 行，启动了两个 Go 协程。现在，这两个协程并发地运行。`numbers` 协程首先休眠 250 微秒，接着打印 `1`，然后再次休眠，打印 `2`，依此类推，一直到打印 `5` 结束。`alphabete` 协程同样打印从 `a` 到 `e` 的字母，并且每次有 400 微秒的休眠时间。 Go 主协程启动了 `numbers` 和 `alphabete` 两个 Go 协程，休眠了 3000 微秒后终止程序。  
 
