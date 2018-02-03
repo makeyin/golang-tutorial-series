@@ -19,3 +19,4 @@
 * [16 结构体](16-structures.md)
 * [17 方法](17-methods.md)
 * [18 接口 第一部分](18-interfaces-1.md)
+* [19 接口 第二部分](18-interfaces-2.md)
