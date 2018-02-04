@@ -44,8 +44,8 @@ func main() {
 访问网页后会发现，提示的不是“无法访问”，而是”页面没找到“，说明http已经开始服务了，只是没有找到页面
 由此可以看出，访问什么路径显示什么网页 这件事情，和ListenAndServe的第2个参数有关
 
-查询[ListenAndServe的文档](https://gowalker.org/net/http#ListenAndServe)可知，第2个参数是一个Hander
-Hander是啥呢，它是一个接口。这个接口很简单，只要某个struct有ServeHTTP(http.ResponseWriter, *http.Request)这个方法，那这个struct就自动实现了Hander接口
+查询[ListenAndServe的文档](https://gowalker.org/net/http#ListenAndServe)可知，第2个参数是一个[Hander
+Hander](https://gowalker.org/net/http#Handler)是啥呢，它是一个接口。这个接口很简单，只要某个struct有ServeHTTP(http.ResponseWriter, *http.Request)这个方法，那这个struct就自动实现了Hander接口
 
 显示什么网页取决于第二个参数Hander，Hander又只有1个ServeHTTP
 所以可以证明，显示什么网页取决于ServeHTTP
@@ -146,7 +146,7 @@ func main() {
 如果一个网站有上百个页面，那是否要上百个case？
 很不幸，是的
 那管理起来岂不是要累死？
-要累死，不过，还好有ServeMux
+要累死，不过，还好有[ServeMux](http://gowalker.org/net/http#ServeMux)
 
 ##用ServeMux拯救最傻的网站
 
