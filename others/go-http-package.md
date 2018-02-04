@@ -44,7 +44,7 @@ func main() {
 访问网页后会发现，提示的不是“无法访问”，而是”页面没找到“，说明http已经开始服务了，只是没有找到页面
 由此可以看出，访问什么路径显示什么网页 这件事情，和ListenAndServe的第2个参数有关
 
-查询ListenAndServe的文档可知，第2个参数是一个Hander
+查询[ListenAndServe的文档](https://gowalker.org/net/http#ListenAndServe)可知，第2个参数是一个Hander
 Hander是啥呢，它是一个接口。这个接口很简单，只要某个struct有ServeHTTP(http.ResponseWriter, *http.Request)这个方法，那这个struct就自动实现了Hander接口
 
 显示什么网页取决于第二个参数Hander，Hander又只有1个ServeHTTP
