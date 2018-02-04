@@ -142,19 +142,19 @@ func main() {
 }
 ```
 
-运行后，可以看出，一个case就是一个页面
-如果一个网站有上百个页面，那是否要上百个case？
-很不幸，是的
-那管理起来岂不是要累死？
-要累死，不过，还好有[ServeMux](http://gowalker.org/net/http#ServeMux)
+运行后，可以看出，一个case就是一个页面  
+如果一个网站有上百个页面，那是否要上百个case？  
+很不幸，是的  
+那管理起来岂不是要累死？  
+要累死，不过，还好有[ServeMux](http://gowalker.org/net/http#ServeMux)  
 
-##用ServeMux拯救最傻的网站
+##用ServeMux拯救最傻的网站  
 
-现在来介绍ServeMux
+现在来介绍ServeMux  
 
-ServeMux大致作用是，他有一张map表，map里的key记录的是r.URL.String()，而value记录的是一个方法，这个方法和ServeHTTP是一样的，这个方法有一个别名，叫HandlerFunc
-ServeMux还有一个方法名字是Handle，他是用来注册HandlerFunc 的
-ServeMux还有另一个方法名字是ServeHTTP，这样ServeMux是实现Handler接口的，否者无法当http.ListenAndServe的第二个参数传输
+ServeMux大致作用是，他有一张map表，map里的key记录的是r.URL.String()，而value记录的是一个方法，这个方法和ServeHTTP是一样的，这个方法有一个别名，叫HandlerFunc  
+ServeMux还有一个方法名字是Handle，他是用来注册HandlerFunc 的  
+ServeMux还有另一个方法名字是ServeHTTP，这样ServeMux是实现Handler接口的，否者无法当http.ListenAndServe的第二个参数传输  
 
 代码来了
 ```golang
@@ -176,20 +176,20 @@ func main() {
     http.ListenAndServe(":8080", mux)
 }
 ```
-解释一下
-mux := http.NewServeMux():新建一个ServeMux。
-mux.Handle("/", &b{}):注册路由，把"/"注册给b这个实现Handler接口的struct，注册到map表中。
-http.ListenAndServe(":8080", mux)第二个参数是mux。
-运行时，因为第二个参数是mux，所以http会调用mux的ServeHTTP方法。
-ServeHTTP方法执行时，会检查map表（表里有一条数据，key是“/h”，value是&b{}的ServeHTTP方法）
-如果用户访问/h的话，mux因为匹配上了，mux的ServeHTTP方法会去调用&b{}的 ServeHTTP方法，从而打印hello
-如果用户访问/abc的话，mux因为没有匹配上，从而打印404 page not found
+解释一下  
+mux := http.NewServeMux():新建一个ServeMux。  
+mux.Handle("/", &b{}):注册路由，把"/"注册给b这个实现Handler接口的struct，注册到map表中。  
+http.ListenAndServe(":8080", mux)第二个参数是mux。  
+运行时，因为第二个参数是mux，所以http会调用mux的ServeHTTP方法。  
+ServeHTTP方法执行时，会检查map表（表里有一条数据，key是“/h”，value是&b{}的ServeHTTP方法）  
+如果用户访问/h的话，mux因为匹配上了，mux的ServeHTTP方法会去调用&b{}的 ServeHTTP方法，从而打印hello  
+如果用户访问/abc的话，mux因为没有匹配上，从而打印404 page not found  
 
-ServeMux就是个二传手！
+ServeMux就是个二传手！  
 
-##ServeMux的HandleFunc方法
+##ServeMux的HandleFunc方法  
 
-发现了没有，b这个struct仅仅是为了装一个ServeHTTP而存在，所以能否跳过b呢，ServeMux说：可以 mux.HandleFunc是用来注册func到map表中的
+发现了没有，b这个struct仅仅是为了装一个ServeHTTP而存在，所以能否跳过b呢，ServeMux说：可以 mux.HandleFunc是用来注册func到map表中的  
 ```golang
 package main
 
